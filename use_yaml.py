@@ -1,6 +1,6 @@
 
 class use_yaml():
-    #TODO : yamlが使えるようになったら修正
+    #TODO : yamlにする
     def load_csv(self, path):
         yaml_dic = {}
         with open(path, mode='r') as f:

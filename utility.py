@@ -9,8 +9,13 @@ class utility():
         url = url.rstrip('/')
         words = url.split('/')
         word = words[-1]
-        tmp  = word.split('?')
-        return tmp[0]
+        if '?' in word:
+            tmp = word.split('?')
+            word = tmp[0]
+        if '#' in word:
+            tmp = word.split('#')
+            word = tmp[0]
+        return word
 
     def mkdir(self, path):
         os.mkdir(path)

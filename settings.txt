@@ -1,6 +1,8 @@
-TargetUrl,http://example.selenium.jp/reserveApp_Renewal/
+TargetUrl,http://testerchan.hatenadiary.com/
 ActuatingCycle,4
 WaitTimeForAction,5
-WaitTimeForLinkCheck,0.5
-IsHeadless,False
+WaitTimeForLinkCheck,0.9
 LogDir,log/
+IsHeadless,False
+IsLinkCheck,True
+IsBrowserCheck,True

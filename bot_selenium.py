@@ -55,6 +55,9 @@ class BotSelenium():
             print(e)
             return False
 
+    def set_origin_code(self):
+        self.origin_code = self.get_page_source()
+
     def reset(self, url):
         self.action_list = []
         self.move_url(url)
@@ -86,11 +89,12 @@ class BotSelenium():
     def get_page_source(self):
         return self.driver.page_source
 
+    #タイトルを取得
     def get_title(self):
         return self.driver.title
 
     
-
+    #クリックする
     def click(self, action_number):
         try:
             text = self.action_list[action_number].text
@@ -98,23 +102,24 @@ class BotSelenium():
             tag = self.action_list[action_number].tag_name
             if tag == None : tag = ''
             loc = self.action_list[action_number].location
+            loc_text = 'X:' + str(loc['x']) + ' Y: ' + str(loc['y'])
+
             if self.is_debug:
                 print("click text : %s" % text)
             self.action_list[action_number].click()
-            loc_text = 'X:' + str(loc['x']) + ' Y: ' + str(loc['y'])
-            return "変化があった", str(text), str(tag), loc_text
+            
+            return str(text), str(tag), loc_text
         except Exception as e:
             print(e)
-            return "変化なし", "label:" + text + str(e), str(tag), loc_text
+            return "label:" + text + '\n' + str(e), str(tag), loc_text
 
     #origin_page_souceと操作後のpage_sourceが同じか判定する。操作結果判定部分
     def is_change_html_source(self):
         source = self.get_page_source()
         if self.origin_code == source:
-            print("Not move error")
-            return False
+            return "変化なし"
         else:
-            return True
+            return "変化があった"
 
     #アクションリストの作成
     def make_action_list(self, start_url):
