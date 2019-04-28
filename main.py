@@ -1,6 +1,7 @@
 import bot_selenium
 import check_http_status
 import make_log
+import use_yaml
 import random
 
 class bot_main():
@@ -10,9 +11,23 @@ class bot_main():
     is_headless = True
     log_root_dir = 'log/'
     log_dir = ''
-    url = "http://testerchan.hatenadiary.com/"
+    url = "http://example.selenium.jp/reserveApp/"
+
+    def __init__(self):
+        self.load('settings.txt')
+
+    def load(self, path):
+        yaml = use_yaml.use_yaml().load_csv(path)
+        self.action_num = int(yaml['ActuatingCycle'])
+        self.wait_time = int(yaml['WaitTimeForAction'])
+        self.wait_time_for_linkcheck = float(yaml['WaitTimeForLinkCheck'])
+        self.is_headless = True if yaml['IsHeadless'] == 'True' else False
+        self.log_root_dir = yaml['LogDir']
+        self.url = yaml['TargetUrl']
+
 
     def main(self):
+        print(self.url)
         bot = bot_selenium.BotSelenium(self.log_root_dir)
         status = check_http_status.check_url_http_status()
         bot.run_chrome(self.url, self.is_headless)

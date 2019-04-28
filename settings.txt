@@ -1,0 +1,6 @@
+TargetUrl,http://example.selenium.jp/reserveApp_Renewal/
+ActuatingCycle,4
+WaitTimeForAction,5
+WaitTimeForLinkCheck,0.5
+IsHeadless,False
+LogDir,log/
