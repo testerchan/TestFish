@@ -70,10 +70,10 @@ class BotSelenium():
         
     #現在のページでのブラウザログを出力する
     def get_browser_log(self):
-        log_list = []
+        text = ''
         for entry in self.driver.get_log('browser'):
-            log_list.append(entry['message'])
-        return log_list
+            text += entry['message'] + '\n\n'
+        return text
 
     #アクションリストの長さを返す
     def get_action_list_length(self):
@@ -86,20 +86,26 @@ class BotSelenium():
     def get_page_source(self):
         return self.driver.page_source
 
+    def get_title(self):
+        return self.driver.title
+
     
 
     def click(self, action_number):
         try:
             text = self.action_list[action_number].text
+            if text == None : text = ''
             tag = self.action_list[action_number].tag_name
+            if tag == None : tag = ''
             loc = self.action_list[action_number].location
             if self.is_debug:
                 print("click text : %s" % text)
             self.action_list[action_number].click()
-            return True, text, tag, loc
+            loc_text = 'X:' + str(loc['x']) + ' Y: ' + str(loc['y'])
+            return "変化があった", str(text), str(tag), loc_text
         except Exception as e:
             print(e)
-            return False, e, None, None
+            return "変化なし", "label:" + text + str(e), str(tag), loc_text
 
     #origin_page_souceと操作後のpage_sourceが同じか判定する。操作結果判定部分
     def is_change_html_source(self):

@@ -7,7 +7,7 @@ class check_url_http_status():
 
     def check_url_http_status(self, element_list, wait_time):
         error_list = []
-
+        text = ''
         for element in element_list:
             if element.tag_name == "a":
                 href = element.get_attribute("href")
@@ -18,9 +18,10 @@ class check_url_http_status():
                         error_list.append(
                             {"code":r.status_code, "url":href}
                         )
-                        print(str(r.status_code) + " : " + href)
+                        text += str(r.status_code) + " : " + href + '\n'
+                    print(str(r.status_code) + " : " + href)
                     self.sleep(wait_time)
-        return error_list
+        return text
 
     def sleep(self, sec):
         sleep(sec)

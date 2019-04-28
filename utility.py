@@ -8,9 +8,16 @@ class utility():
     def get_last_ward_of_url(self, url):
         url = url.rstrip('/')
         words = url.split('/')
-        return words[-1]
+        word = words[-1]
+        tmp  = word.split('?')
+        return tmp[0]
 
     def mkdir(self, path):
         os.mkdir(path)
         return path
+
+    def save_file(self, path, message):
+        with open(path, mode='w') as f:
+            f.write(message)
+
 
